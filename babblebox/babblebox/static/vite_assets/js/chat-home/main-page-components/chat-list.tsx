@@ -35,14 +35,17 @@ const ChatList: React.FC<ChatListProps> = ({onChatSelect}) => {
 
     fetchChats();
   }, []);
-
+// if chat array size is 0
   return (
     <Box sx={{ height: '100%', overflow: 'auto' }}>
       <Paper sx={{ maxHeight: '100%', overflow: 'auto' }}>
         <List>
           {loading && <ListItem><ListItemText primary="Loading chats..." /></ListItem>}
           {error && <ListItem><ListItemText primary={error} /></ListItem>}
-          {chats.map((chat) => (
+
+
+          {chats.length === 0 && !loading && !error ? <ListItem><ListItemText primary="No chats found." /></ListItem> :
+          chats.map((chat) => (
             <ListItem button key={chat.id} onClick={() => onChatSelect(chat.id)} >
               <ListItemText primary={chat.topic} />
             </ListItem>

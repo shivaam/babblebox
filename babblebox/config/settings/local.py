@@ -14,7 +14,7 @@ SECRET_KEY = env(
     default="T28ClZRoRyp3RwzMCFf6WPHRCGUzaUBe6EOcOPNjr3jO08Flxy7cAPsi1inb27mC",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "localhost"]
 
 # CACHES
 # ------------------------------------------------------------------------------
@@ -78,3 +78,5 @@ CELERY_TASK_EAGER_PROPAGATES = True
 # WEBPACK_LOADER["DEFAULT"]["CACHE"] = not DEBUG  # noqa: F405
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+CORS_ALLOW_ALL_ORIGINS = True

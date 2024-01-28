@@ -8,6 +8,7 @@ import environ
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 # babblebox/
 APPS_DIR = BASE_DIR / "babblebox"
+
 env = environ.Env()
 
 READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
@@ -86,6 +87,7 @@ THIRD_PARTY_APPS = [
 
 LOCAL_APPS = [
     "babblebox.users",
+    "babblebox.api",
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -227,6 +229,7 @@ EMAIL_BACKEND = env(
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
 EMAIL_TIMEOUT = 5
+
 
 # ADMIN
 # ------------------------------------------------------------------------------

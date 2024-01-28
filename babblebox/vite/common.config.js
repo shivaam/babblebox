@@ -33,7 +33,7 @@ export default defineConfig((mode) => {
                     project: join(INPUT_DIR, '/js/apps/project.js'),
                     home: join(INPUT_DIR, '/js/apps/home.js'),
                     css: join(INPUT_DIR, '/css/project.css'),
-                    index: join(INPUT_DIR, '/js/apps/index.jsx'),
+                    page: join(INPUT_DIR, 'js/chat-home/index.tsx')
                 },
             },
         },

@@ -27,5 +27,6 @@ if __name__ == "__main__":
     # babblebox directory.
     current_path = Path(__file__).parent.resolve()
     sys.path.append(str(current_path / "babblebox"))
+    sys.path.append(str(current_path / "config"))
 
     execute_from_command_line(sys.argv)
