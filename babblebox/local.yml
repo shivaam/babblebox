@@ -35,6 +35,8 @@ services:
       - babblebox_local_postgres_data_backups:/backups
     env_file:
       - ./.envs/.local/.postgres
+    ports:
+      - '5432:5432'
 
   docs:
     image: babblebox_local_docs
@@ -106,4 +108,8 @@ services:
       - /app/node_modules
     command: npm run dev
     ports:
-      - '3000:3000'
+      - '5173:5173'
+
+  network-debug:
+    image: nicolaka/netshoot  # A popular network troubleshooting image
+    command: sleep infinity

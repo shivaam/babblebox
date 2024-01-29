@@ -7,8 +7,9 @@ import path from 'path';
 export default defineConfig((mode) => {
     const env = loadEnv(mode, process.cwd(), '');
     console.log("***##" + path.resolve(__dirname, '..', 'node_modules/bootstrap'))
-    const INPUT_DIR = '../babblebox/babblebox/static/vite_assets';
-    const OUTPUT_DIR =  '../babblebox/babblebox/static/vite_assets_dist';
+    const INPUT_DIR = './babblebox/static/vite_assets';
+    const OUTPUT_DIR =  './babblebox/static/vite_assets_dist';
+    console.log("Input directory" + join(INPUT_DIR, '/js/apps/vendors.js'))
 
     return {
         plugins: [react(      {fastRefresh: false})],

@@ -5,6 +5,7 @@
 {% block content %}
 
   {% if request.user.is_authenticated %}
+    {% csrf_token %}
     {% vite_asset 'js/chat-home/index.tsx' %}
     <div id="root"></div>
   {% else %}

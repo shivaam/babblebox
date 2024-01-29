@@ -23,10 +23,11 @@ export const RecordNewChatMessage: React.FC<IRecordNewChatMessageProps> = ({chat
     formData.append('chat_id', chatId);
     formData.append('audio_file.audio', audioBlob, 'filename.mp3'); // 'filename.mp3' is the name of your file
     formData.append('image_id', '');
-
+    const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
     fetch(`http://localhost:8000/api/ChatMessage/`, { // Replace with your API endpoint
       method: 'POST',
-      body: formData
+      body: formData,
+      headers: {'X-CSRFToken': csrf_token},
     })
       .then(response => response.json())
       .then(data => console.log(data))

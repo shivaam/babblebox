@@ -28,3 +28,4 @@ django-webpack-loader==3.0.1  # https://github.com/django-webpack/django-webpack
 avro_python3==1.10.2
 faster_whisper==0.10.0
 pulsar_client==3.4.0
+django-vite==3.0.3
