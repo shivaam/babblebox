@@ -176,3 +176,9 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 ]
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+DJANGO_VITE = {
+    "default": {
+        "dev_mode": False
+    }
+}

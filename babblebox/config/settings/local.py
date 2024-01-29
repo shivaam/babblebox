@@ -85,3 +85,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TOOLBAR_CALLBACK': lambda request: request.headers.get('X-Requested-With') != 'XMLHttpRequest',
 }
+
+
+DJANGO_VITE = {
+    "default": {
+        "dev_mode": True,
+        "dev_server_port": 5173,
+        "dev_server_host": "localhost"
+    }
+}
