@@ -1,5 +1,6 @@
 from .base import *  # noqa
 from .base import env
+from pathlib import Path
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -7,7 +8,7 @@ from .base import env
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
-
+ALLOWED_HOSTS += ["localhost"]
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405
@@ -86,16 +87,18 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+'''
 MEDIA_URL = f"https://{aws_s3_domain}/media/"
 COLLECTFAST_STRATEGY = "collectfast.strategies.boto3.Boto3Strategy"
 STATIC_URL = f"https://{aws_s3_domain}/static/"
+'''
 
 # EMAIL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#default-from-email
 DEFAULT_FROM_EMAIL = env(
     "DJANGO_DEFAULT_FROM_EMAIL",
-    default="Babblebox <noreply@example.com>",
+    default="shivam.riky@gmail.com",
 )
 # https://docs.djangoproject.com/en/dev/ref/settings/#server-email
 SERVER_EMAIL = env("DJANGO_SERVER_EMAIL", default=DEFAULT_FROM_EMAIL)
@@ -179,6 +182,7 @@ SPECTACULAR_SETTINGS["SERVERS"] = [  # noqa: F405
 
 DJANGO_VITE = {
     "default": {
-        "dev_mode": False
+        "dev_mode": False,
+        "manifest_path": str(Path(STATIC_ROOT) / "vite_assets_dist" / "manifest.json")
     }
 }

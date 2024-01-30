@@ -25,7 +25,7 @@ export default defineConfig((mode) => {
             }
         },
         build: {
-            manifest: true,
+            manifest: "manifest.json",
             emptyOutDir: true,
             outDir: resolve(OUTPUT_DIR),
             rollupOptions: {

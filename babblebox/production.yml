@@ -30,6 +30,8 @@ services:
       - production_postgres_data_backups:/backups
     env_file:
       - ./.envs/.production/.postgres
+    ports:
+      - '5432:5432'
 
   traefik:
     build:

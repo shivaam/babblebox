@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemText, Paper, Box, Typography } from '@mui/material';
 import axios from 'axios';
+import {axiosInstance} from "../utils";
 import {RecordNewChatMessage} from "./record-new-chat-message";
 
 interface ChatMessage {
@@ -26,7 +27,7 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
       setLoading(true);
       try {
         // Replace with your actual endpoint, append the chatId to fetch messages for a specific chat
-        const response = await axios.get<ChatMessage[]>(`http://localhost:8000/api/ChatMessage/?chat_id=${chatId}`);
+        const response = await axiosInstance.get<ChatMessage[]>(`ChatMessage/?chat_id=${chatId}`);
         setChatMessages(response.data);
         setError(null);
       } catch (error) {

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Paper, Typography, CircularProgress } from '@mui/material';
 import axios from 'axios';
+import {axiosInstance} from "../utils";
 
 interface AudioFile {
   id: string;
@@ -35,12 +36,12 @@ const ImageTranscription: React.FC<Props> = ({ audioMessageId, imageId }) => {
       try {
         // Fetch Audio File
         if (audioMessageId) {
-          const audioResponse = await axios.get<AudioFile>(`http://localhost:8000/api/AudioFile/${audioMessageId}`);
+          const audioResponse = await axiosInstance.get<AudioFile>(`AudioFile/${audioMessageId}`);
           setAudioFile(audioResponse.data);
         }
         // Fetch Image File if imageId is not null
         if (imageId) {
-          const imageResponse = await axios.get<ImageFile>(`http://localhost:8000/api/ImageFile/${imageId}`);
+          const imageResponse = await axiosInstance.get<ImageFile>(`ImageFile/${imageId}`);
           setImageFile(imageResponse.data);
         }
         setError(null);

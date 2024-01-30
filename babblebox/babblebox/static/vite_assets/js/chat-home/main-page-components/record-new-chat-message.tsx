@@ -1,4 +1,5 @@
 import { AudioRecorder } from 'react-audio-voice-recorder';
+import {axiosInstance} from "../utils";
 
 interface IRecordNewChatMessageProps {
   chatId: string;
@@ -24,15 +25,17 @@ export const RecordNewChatMessage: React.FC<IRecordNewChatMessageProps> = ({chat
     formData.append('audio_file.audio', audioBlob, 'filename.mp3'); // 'filename.mp3' is the name of your file
     formData.append('image_id', '');
     const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
-    fetch(`http://localhost:8000/api/ChatMessage/`, { // Replace with your API endpoint
-      method: 'POST',
-      body: formData,
-      headers: {'X-CSRFToken': csrf_token},
+    axiosInstance.post('ChatMessage/', formData, {
+      headers: {'X-CSRFToken': csrf_token}
     })
-      .then(response => response.json())
-      .then(data => console.log(data))
-      .catch(error => console.error(error));
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }
+
   return (
     <div>
       <AudioRecorder

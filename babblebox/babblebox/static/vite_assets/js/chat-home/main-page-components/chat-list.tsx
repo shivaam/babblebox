@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { List, ListItem, ListItemText, Paper, Box } from '@mui/material';
 import axios from 'axios';
+import {axiosInstance} from "../utils";
 
 interface Chat {
   id: string;
@@ -22,7 +23,7 @@ const ChatList: React.FC<ChatListProps> = ({onChatSelect}) => {
       setLoading(true);
       try {
         // Replace with your actual endpoint
-        const response = await axios.get<Chat[]>('http://localhost:8000/api/Chat/');
+        const response = await axiosInstance.get<Chat[]>('Chat/');
         setChats(response.data);
         setError(null);
       } catch (error) {

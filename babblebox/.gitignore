@@ -336,4 +336,6 @@ webpack-stats.json
 .envs/*
 !.envs/.local/
 
-babblebox/static/vite_assets_dist/assets/*
+babblebox/static/vite_assets_dist/*
+
+k8s
