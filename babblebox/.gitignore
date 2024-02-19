@@ -337,5 +337,3 @@ webpack-stats.json
 !.envs/.local/
 
 babblebox/static/vite_assets_dist/*
-
-k8s
