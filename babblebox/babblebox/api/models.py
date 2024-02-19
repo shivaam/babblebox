@@ -1,5 +1,6 @@
 import os
 import uuid
+import logging
 
 from avro.schema import parse
 from django.db import models
@@ -88,4 +89,7 @@ class ChatMessage(models.Model):
             return schema
 
 
+logger = logging.getLogger(__name__)
+
+logger.info(f'Django DEBUG mode is {"on" if settings.DEBUG else "off"}')
 print(ChatMessage.get_avro_schema())

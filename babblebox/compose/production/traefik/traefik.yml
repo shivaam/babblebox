@@ -1,5 +1,7 @@
 log:
-  level: INFO
+  level: DEBUG
+
+accessLog: {}
 
 entryPoints:
   web:
@@ -31,7 +33,7 @@ certificatesResolvers:
 http:
   routers:
     web-secure-router:
-      rule: 'Host(`example.com`) || Host(`www.example.com`) || Host(`localhost`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -40,15 +42,19 @@ http:
       tls:
         # https://doc.traefik.io/traefik/routing/routers/#certresolver
         certResolver: letsencrypt
+        domains:
+          - main: babblebox-app.shivamrastogi.com
 
     flower-secure-router:
-      rule: 'Host(`example.com`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`)'
       entryPoints:
         - flower
       service: flower
       tls:
         # https://doc.traefik.io/traefik/master/routing/routers/#certresolver
         certResolver: letsencrypt
+        domains:
+          - main: babblebox-app.shivamrastogi.com
 
   middlewares:
     csrf:
