@@ -1,17 +1,14 @@
 log:
   level: DEBUG
 
-accessLog: {}
+accessLog:
+  filePath: /etc/traefik/access.log
 
 entryPoints:
   web:
     # http
     address: ':80'
-    http:
-      # https://doc.traefik.io/traefik/routing/entrypoints/#entrypoint
-      redirections:
-        entryPoint:
-          to: web-secure
+
 
   web-secure:
     # https
@@ -32,8 +29,13 @@ certificatesResolvers:
 
 http:
   routers:
+    web-router:
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
+      entryPoints:
+        - web
+      service: django
     web-secure-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -46,7 +48,7 @@ http:
           - main: babblebox-app.shivamrastogi.com
 
     flower-secure-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
       entryPoints:
         - flower
       service: flower

@@ -1,7 +1,7 @@
 import pulsar
 from avro.io import DatumWriter, BinaryEncoder
 import io
-from djang.conf import settings
+from django.conf import settings
 
 from pulsar.schema import BytesSchema
 

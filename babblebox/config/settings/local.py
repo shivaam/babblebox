@@ -2,7 +2,7 @@ from .base import *  # noqa
 from .base import env
 
 '''
-export DATABASE_URL=postgres://rastoshi:rastoshi@127.0.0.1:5432/
+export DATABASE_URL=postgres://test:test@127.0.0.1:5432/
 '''
 # GENERAL
 # ------------------------------------------------------------------------------
