@@ -50,7 +50,7 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_USER
                   name: postgresc
-          image: 058264340712.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_postgres
+          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_postgres
           name: postgres
           ports:
             - containerPort: 5432

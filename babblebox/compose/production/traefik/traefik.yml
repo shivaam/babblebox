@@ -30,12 +30,11 @@ certificatesResolvers:
 http:
   routers:
     web-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`)'
       entryPoints:
         - web
       service: django
     web-secure-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
       entryPoints:
         - web-secure
       middlewares:
@@ -48,7 +47,7 @@ http:
           - main: babblebox-app.shivamrastogi.com
 
     flower-secure-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com`) || Host(`localhost`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`)'
       entryPoints:
         - flower
       service: flower
