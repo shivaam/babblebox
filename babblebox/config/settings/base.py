@@ -2,7 +2,7 @@
 Base settings to build other settings files upon.
 """
 from pathlib import Path
-
+import os
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
@@ -11,11 +11,13 @@ APPS_DIR = BASE_DIR / "babblebox"
 
 env = environ.Env()
 
-READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
-if READ_DOT_ENV_FILE:
-    print("Reading .env file as the django read dot env file is set to True. File: ", str(BASE_DIR / ".env"))
-    # OS environment variables take precedence over variables from .env
-    env.read_env(str(BASE_DIR / ".env"))
+if env.ENVIRON.get("DJANGO_READ_LOCAL_ENV_FILE", default=False):
+    print("Using local env file")
+    environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.django"))
+    environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.postgres"))
+    print(env('REDIS_URL'))
+    print(env.db("DATABASE_URL"))
+
 
 # GENERAL
 # ------------------------------------------------------------------------------

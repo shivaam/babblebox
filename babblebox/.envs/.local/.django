@@ -1,4 +1,5 @@
 # General
+DJANGO_READ_DOT_ENV_FILE=True
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
@@ -17,3 +18,6 @@ EMAIL_HOST=mailpit
 
 PULSAR_URL='pulsar://a6d1a705dfaea47459aefabe562bedd2-1103861468.us-east-1.elb.amazonaws.com:6650'
 NEW_MESSAGE_TOPIC='persistent://babblebox/audio_processing/new_message'
+
+#postgres
+DATABASE_URL=postgres://test:test@127.0.0.1:5432/
