@@ -48,24 +48,6 @@ services:
       - '0.0.0.0:443:443'
       - '0.0.0.0:5555:5555'
 
-  redis:
-    image: redis:6
-
-  celeryworker:
-    <<: *django
-    image: ${DOCKER_REGISTRY}/babblebox_production_celeryworker
-    command: /start-celeryworker
-
-  celerybeat:
-    <<: *django
-    image: ${DOCKER_REGISTRY}/babblebox_production_celerybeat
-    command: /start-celerybeat
-
-  flower:
-    <<: *django
-    image: ${DOCKER_REGISTRY}/babblebox_production_flower
-    command: /start-flower
-
   awscli:
     build:
       context: .
