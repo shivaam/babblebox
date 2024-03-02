@@ -24,7 +24,7 @@ spec:
         io.kompose.service: traefik
     spec:
       containers:
-        - image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_traefik:CODE_XTAG
+        - image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_traefik:CODE_YTAG
           name: traefik
           ports:
             - containerPort: 80

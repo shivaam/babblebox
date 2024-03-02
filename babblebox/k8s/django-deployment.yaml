@@ -130,6 +130,6 @@ spec:
                 configMapKeyRef:
                   key: WEB_CONCURRENCY
                   name: djangoc
-          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:CODE_XTAG
+          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:CODE_YTAG
           name: django
       restartPolicy: Always
