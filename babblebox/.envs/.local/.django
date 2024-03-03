@@ -14,10 +14,12 @@ REDIS_URL=redis://redis:6379/0
 CELERY_FLOWER_USER=debug
 CELERY_FLOWER_PASSWORD=debug
 
-EMAIL_HOST=mailpit
+EMAIL_HOST=127.0.0.1
 
+#Pulsar
 PULSAR_URL='pulsar://a6d1a705dfaea47459aefabe562bedd2-1103861468.us-east-1.elb.amazonaws.com:6650'
 NEW_MESSAGE_TOPIC='persistent://babblebox/audio_processing/new_message'
+DISABLE_PULSAR_CLIENT=True
 
 #postgres
-DATABASE_URL=postgres://test:test@127.0.0.1:5432/
+DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/babblebox

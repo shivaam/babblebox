@@ -6,17 +6,17 @@ import os
 import environ
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
+
 # babblebox/
 APPS_DIR = BASE_DIR / "babblebox"
 
 env = environ.Env()
 
 if env.ENVIRON.get("DJANGO_READ_LOCAL_ENV_FILE", default=False):
-    print("Using local env file")
+    print(f"Using local env file. BASE_DIR: {BASE_DIR}")
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.django"))
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.postgres"))
-    print(env('REDIS_URL'))
-    print(env.db("DATABASE_URL"))
+    print(f"Using Database: {env.db('DATABASE_URL')}")
 
 
 # GENERAL
