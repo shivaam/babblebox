@@ -51,13 +51,42 @@ class ImageFile(models.Model):
 class Chat(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     topic = models.CharField(max_length=255, editable=True)
+    is_public = models.BooleanField(default=False, editable=True)
+    #  Add a particpants field to store the participants of the chat that is a mant-to-many relationship with users
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='chat_owner',
+        editable=False,
+        null=False,
+        blank=False
+    )
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL, through='api.ChatParticipant')
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            # Generate a unique ID
-            self.id = str(uuid.uuid4())
         super(Chat, self).save(*args, **kwargs)
 
+    def is_owner(self, user):
+        return self.owner == user
+
+
+class ChatParticipant(models.Model):
+    chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    has_read_access = models.BooleanField(default=True)
+    has_write_access = models.BooleanField(default=True)
+    last_updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['chat'], name='chat_participant_idx'),
+            models.Index(fields=['user'], name='user_participant_idx'),
+            models.Index(fields=['chat', 'user'], name='chat_user_participant_idx'),
+        ]
+
+    @classmethod
+    def get_participants_for_chat(cls, chat_id):
+        return cls.objects.filter(chat=chat_id)
 
 class ChatMessage(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -65,6 +94,17 @@ class ChatMessage(models.Model):
     audio_message_id = models.ForeignKey(AudioFile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     image_id = models.ForeignKey(ImageFile, on_delete=models.CASCADE, null=True, blank=True)
+    owner = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='chat_message_owner',
+        editable=False,
+        null=False,
+        blank=False
+    )
+
+    def is_owner(self, user):
+        return self.owner == user
 
     class Meta:
         indexes = [
@@ -90,6 +130,5 @@ class ChatMessage(models.Model):
 
 
 logger = logging.getLogger(__name__)
-
 logger.info(f'Django DEBUG mode is {"on" if settings.DEBUG else "off"}')
-print(ChatMessage.get_avro_schema())
+

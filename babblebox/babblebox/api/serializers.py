@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AudioFile, ChatMessage, Chat, ImageFile
+from .models import AudioFile, ChatMessage, Chat, ImageFile, ChatParticipant
 
 
 class AudioFileSerializer(serializers.ModelSerializer):
@@ -14,11 +14,17 @@ class ImageFileSerializer(serializers.ModelSerializer):
         fields = ['id', 'image', 'file_location']
 
 
+class ParticipantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChatParticipant
+        fields = ['chat', 'user', 'has_read_access', 'has_write_access', 'last_updated']
+
+
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ['id', 'topic']
-
+        fields = ['id', 'topic', 'participants', 'owner', 'is_public']
+        read_only_fields = ['owner']
 
 class ChatMessageSerializer(serializers.ModelSerializer):
     audio_file = AudioFileSerializer(write_only=True)

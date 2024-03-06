@@ -8,12 +8,14 @@ from pulsar.schema import BytesSchema
 topic = settings.NEW_MESSAGE_TOPIC
 client = None
 producer = None
-try:
-    client = pulsar.Client(settings.PULSAR_URL)
-    print("No client created")
-    producer = client.create_producer(topic, schema=BytesSchema())
-except Exception as e:
-    print("Exception raised" + str(e))
+if settings.DISABLE_PULSAR_CLIENT is True:
+    print("Pulsar is enabled")
+    try:
+        client = pulsar.Client(settings.PULSAR_URL)
+        print("No client created")
+        producer = client.create_producer(topic, schema=BytesSchema())
+    except Exception as e:
+        print("Exception raised" + str(e))
 
 class PulsarClient:
     @classmethod

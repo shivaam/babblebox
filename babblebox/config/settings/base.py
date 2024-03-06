@@ -23,6 +23,7 @@ if env.ENVIRON.get("DJANGO_READ_LOCAL_ENV_FILE", default=False):
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
+DISABLE_PULSAR_CLIENT = env("DISABLE_PULSAR_CLIENT", default=False)
 
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
