@@ -71,6 +71,7 @@ class Chat(models.Model):
 
 
 class ChatParticipant(models.Model):
+    # change the chat_id and user_id to chat and user
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     has_read_access = models.BooleanField(default=True)

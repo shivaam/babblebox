@@ -1,4 +1,7 @@
+from venv import logger
 from rest_framework import permissions
+
+from .models import Chat, ChatParticipant
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -15,12 +18,34 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         return obj.owner == request.user
 
 
-class IsParticipantOrOwner(permissions.BasePermission):
+class IsChatParticipantOrOwnerForChatObj(permissions.BasePermission):
     """
     Custom permission to only allow participants or the owner of the chat to view it.
     """
 
     def has_object_permission(self, request, view, obj):
-        if request.user == obj.owner:
+        if request.user == obj.owner or obj.is_public:
             return True
         return obj.participants.filter(id=request.user.id).exists()
+
+
+class IsChatParticipant(permissions.BasePermission):
+    """
+    Custom permission to only allow participants of a chat to add new participants.
+    """
+
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+        # if given chat is public, then anyone can join
+        chat_id = request.data.get('chat')  # Assuming the chat ID is sent in the request body
+        if not chat_id:
+            logger.error('Chat ID not found in request body')
+            return False
+
+        chat_obj = Chat.objects.get(id=chat_id)
+        if chat_obj.is_public:
+            logger.info('Chat is public. Anyone can join')
+            return True
+
+        return ChatParticipant.objects.filter(chat_id=chat_id, user=request.user).exists()

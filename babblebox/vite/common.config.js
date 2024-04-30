@@ -6,13 +6,16 @@ import path from 'path';
 
 export default defineConfig((mode) => {
     const env = loadEnv(mode, process.cwd(), '');
-    console.log("***##" + path.resolve(__dirname, '..', 'node_modules/bootstrap'))
     const INPUT_DIR = './babblebox/static/vite_assets';
     const OUTPUT_DIR =  './babblebox/static/vite_assets_dist';
-    console.log("Input directory" + join(INPUT_DIR, '/js/apps/vendors.js'))
+    console.log("Input directory: " + join(INPUT_DIR, '/js/apps/vendors.js'))
+    console.log("Current working dir: " + resolve("./"));
 
     return {
-        plugins: [react(      {fastRefresh: false})],
+        plugins: [
+            react({fastRefresh: false}),
+        ],
+        envDir: './vite',
         root: resolve(INPUT_DIR),
         base: '/static/',
         server: {

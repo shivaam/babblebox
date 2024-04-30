@@ -3,14 +3,16 @@
 {% load django_vite %}
 
 {% block content %}
-
   {% if request.user.is_authenticated %}
     {% csrf_token %}
-    {% vite_asset 'js/chat-home/index.tsx' %}
-    <div id="root"></div>
+    {% vite_asset 'js/chat-home/tmp-scroll-html-css/index.tsx' %}
+
+
+    <div id="root" class="bg-white dark:bg-black""></div>
   {% else %}
     <!-- Link to allauth sign-up page -->
     <a href="{% url 'account_signup' %}">Sign Up</a>
   {% endif %}
+
 
 {% endblock content %}

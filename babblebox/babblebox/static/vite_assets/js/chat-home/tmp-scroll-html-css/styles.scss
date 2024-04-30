@@ -1,0 +1,62 @@
+
+::-webkit-scrollbar {
+  width: 0px;
+}
+
+.container {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+  padding: 20px 0;
+  margin-top: 60px;
+}
+
+.card {
+  flex-shrink: 0;
+  width: 200px;
+  height: 250px;
+  border-radius: 10px;
+  margin-left: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.card-image {
+  flex-shrink: 0;
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.image-description {
+  padding: 10px;
+  background-color: white;
+  text-align: center;
+  font-size: 14px;
+  color: black;
+}
+
+.play-button {
+  position: absolute;
+  bottom: 10px; /* Adjust based on your preference */
+  right: 10px; /* Adjust based on your preference */
+  width: 40px; /* Size of the button */
+  height: 40px; /* Size of the button */
+  background-color: black; /* Button background */
+  mask: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>') center / contain no-repeat;
+  /* Adjust the SVG path to fit your design needs */
+  cursor: pointer;
+  border-radius: 50%; /* Makes it circular */
+}
+
+
+.bottom-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: white;
+}
