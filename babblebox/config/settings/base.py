@@ -16,7 +16,7 @@ if env.ENVIRON.get("DJANGO_READ_LOCAL_ENV_FILE", default=False):
     print(f"Using local env file. BASE_DIR: {BASE_DIR}")
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.django"))
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.postgres"))
-    print(f"Using Database: {env.db('DATABASE_URL')}")
+    print(f"Using Database: {env.db('DATABASE_URL')['HOST']}")
 
 
 # GENERAL
