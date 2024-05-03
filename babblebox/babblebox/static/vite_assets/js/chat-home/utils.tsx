@@ -8,7 +8,7 @@ console.log("Running in vite in mode: " + mode)
 
 var api = ""
 if (mode === 'production') {
-  api = "https://babblebox.herokuapp.com/api"
+  api = "http://localhost:5001/api"
 } else if (mode === 'development') {
   api = "http://localhost:8000/api"
 }

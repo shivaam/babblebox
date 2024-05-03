@@ -1,9 +1,6 @@
 /* These styles are generated from project.scss. */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
 
-@import "./tail.css";
+
 
 .alert-debug {
   color: black;

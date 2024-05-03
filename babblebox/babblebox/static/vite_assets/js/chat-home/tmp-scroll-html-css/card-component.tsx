@@ -11,7 +11,7 @@ export interface CardComponentProps {
 
 const CardComponent: React.FC<CardComponentProps> = ( props ) => {
   const [isHovering, setIsHovering] = useState(false); // State to track hover
-  const url = "http://localhost:8000/media/test-images/"; // Adjust the URL as necessary
+  const url = "http://localhost:8000/static/test-images/"; // Adjust the URL as necessary
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {

@@ -26,7 +26,7 @@ class ChatParticipantSerializer(serializers.ModelSerializer):
 
 
 class ChatSerializer(serializers.ModelSerializer):
-    participants = ChatParticipantSerializer(source='chatparticipant_set', many=True)
+    participants = ChatParticipantSerializer(source='chatparticipant_set', many=True, required=False)
     owner_username = serializers.CharField(source='owner.username', read_only=True)
 
     class Meta:

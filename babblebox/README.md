@@ -96,4 +96,15 @@ Bootstrap v5 is installed using npm and customised by tweaking your variables in
 
 You can find a list of available variables [in the bootstrap source](https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss), or get explanations on them in the [Bootstrap docs](https://getbootstrap.com/docs/5.1/customize/sass/).
 
-Bootstrap's javascript as well as its dependencies are concatenated into a single file: `static/js/vendors.js`.
+
+
+
+# Local Development
+    ```
+    export DJANGO_READ_LOCAL_ENV_FILE=True
+    python manage.py runserver # it loads the env variables from .envs/local file
+    npm run dev # runs the vite js server to provide the js
+    ```
+
+
+# 

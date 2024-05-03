@@ -32,35 +32,22 @@
 
     {% vite_hmr_client %}
 
-    {% block css %}
+{% block css %}
 <!-- Your stuff: Third-party CSS libraries go here -->
 <!-- This file stores project-specific CSS -->
 
-
-{#{% render_bundle 'project' 'css' %}#}
-      {% vite_asset 'css/project.css' %}
+{% vite_asset 'js/apps/project.js' %}
 
 
 {% endblock css %}
 <!-- Le javascript
-    ================================================== -->
+    ==================================================
 {# Placed at the top of the document so pages load faster with defer #}
 {% block javascript %}
 
 
-<!-- Vendor dependencies bundled as one file -->
-{#{% render_bundle 'vendors' 'js' attrs='defer' %}#}
-  {% vite_asset 'js/apps/vendors.js' %}
-
-
-<!-- place project specific Javascript in this file -->
-
-  {% vite_asset 'js/apps/project.js' %}
-
-{#{% render_bundle 'project' 'js' attrs='defer' %}#}
-
-
 {% endblock javascript %}
+-->
 </head>
 
 <body >

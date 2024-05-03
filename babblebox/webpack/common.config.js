@@ -7,7 +7,6 @@ module.exports = {
   context: path.join(__dirname, '../'),
   entry: {
     project: path.resolve(__dirname, '../babblebox/static/js/project'),
-    vendors: path.resolve(__dirname, '../babblebox/static/js/vendors'),
     home: path.resolve(__dirname, '../babblebox/static/js/home'), // new entry for /home
   },
   output: {
