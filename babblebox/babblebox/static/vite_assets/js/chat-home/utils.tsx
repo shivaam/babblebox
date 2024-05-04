@@ -6,9 +6,9 @@ const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 console.log("Running in vite in mode: " + mode)
 
-var api = ""
+export var api = ""
 if (mode === 'production') {
-  api = "http://localhost:5001/api"
+  api = "https://babblebox-app.shivamrastogi.com/api"
 } else if (mode === 'development') {
   api = "http://localhost:8000/api"
 }

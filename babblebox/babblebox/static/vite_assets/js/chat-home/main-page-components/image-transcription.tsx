@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Paper, Typography, CircularProgress } from '@mui/material';
-import axios from 'axios';
 import {axiosInstance} from "../utils";
 
 interface AudioFile {

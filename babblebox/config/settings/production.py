@@ -10,7 +10,7 @@ DEBUG = True
 SECRET_KEY = env("DJANGO_SECRET_KEY")
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["example.com"])
-ALLOWED_HOSTS += ["localhost", "*.us-east-1.elb.amazonaws.com", "afe3e7e7f19474b8f905a1318ca3754e-1960994874.us-east-1.elb.amazonaws.com", "babblebox-app.shivamrastogi.com"]
+ALLOWED_HOSTS += ["localhost", "babblebox-app.shivamrastogi.com"]
 # DATABASES
 # ------------------------------------------------------------------------------
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa: F405

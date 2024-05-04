@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: django-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+
+spec:
+  ingressClassName: nginx
+  tls:
+  - hosts:
+    - babblebox-app.shivamrastogi.com
+    # change to staging when testing
+    secretName: babblebox-dns-secret-prod
+  rules:
+  - host: babblebox-app.shivamrastogi.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: django
+            port:
+              number: 5000

@@ -89,32 +89,68 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_DB
-                  name: postgresc
+                  name: djangoc
             - name: POSTGRES_HOST
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_HOST
-                  name: postgresc
+                  name: djangoc
             - name: POSTGRES_PASSWORD
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_PASSWORD
-                  name: postgresc
+                  name: djangoc
             - name: POSTGRES_PORT
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_PORT
-                  name: postgresc
+                  name: djangoc
             - name: POSTGRES_USER
               valueFrom:
                 configMapKeyRef:
                   key: POSTGRES_USER
-                  name: postgresc
+                  name: djangoc
             - name: WEB_CONCURRENCY
               valueFrom:
                 configMapKeyRef:
                   key: WEB_CONCURRENCY
                   name: djangoc
-          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:CODE_XTAG
+            - name: PULSAR_URL
+              valueFrom:
+                configMapKeyRef:
+                  key: PULSAR_URL
+                  name: djangoc
+            - name: NEW_MESSAGE_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  key: NEW_MESSAGE_TOPIC
+                  name: djangoc
+            - name: DISABLE_PULSAR_CLIENT
+              valueFrom:
+                configMapKeyRef:
+                  key: DISABLE_PULSAR_CLIENT
+                  name: djangoc
+            - name: DJANGO_AWS_S3_REGION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DJANGO_AWS_S3_REGION_NAME
+                  name: djangoc
+            - name: DJANGO_AWS_ACCESS_KEY_ID
+              valueFrom:
+                configMapKeyRef:
+                  key: DJANGO_AWS_ACCESS_KEY_ID
+                  name: djangoc
+            - name: DJANGO_AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                configMapKeyRef:
+                  key: DJANGO_AWS_SECRET_ACCESS_KEY
+                  name: djangoc
+            - name: DJANGO_AWS_STORAGE_BUCKET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: DJANGO_AWS_STORAGE_BUCKET_NAME
+                  name: djangoc
+          image: 767397752164.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:latest
           name: django
+          imagePullPolicy: Always
       restartPolicy: Always

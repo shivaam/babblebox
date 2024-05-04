@@ -89,4 +89,10 @@ RUN DATABASE_URL="" \
   DJANGO_SETTINGS_MODULE="config.settings.test" \
   python manage.py compilemessages
 
+RUN DATABASE_URL="" \
+  PULSAR_URL="" \
+  NEW_MESSAGE_TOPIC="" \
+  DJANGO_SETTINGS_MODULE="config.settings.test" \
+  python manage.py collectstatic --noinput
+
 ENTRYPOINT ["/entrypoint"]

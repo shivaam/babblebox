@@ -23,6 +23,7 @@ http:
         - csrf
       service: django
     web-secure-router:
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`localhost`)'
       entryPoints:
         - web-secure
       middlewares:

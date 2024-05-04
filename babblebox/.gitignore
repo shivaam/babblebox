@@ -24,6 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+venv/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -328,6 +329,8 @@ babblebox/static/webpack_bundles/
 webpack-stats.json
 .env
 .envs/*
-!.envs/.local/
 
+k8s/*config*
 babblebox/static/vite_assets_dist/*
+
+
