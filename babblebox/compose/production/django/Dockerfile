@@ -74,11 +74,6 @@ RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
 
 
-COPY --chown=django:django ./compose/production/django/celery/flower/start /start-flower
-RUN sed -i 's/\r$//g' /start-flower
-RUN chmod +x /start-flower
-
-
 # copy application code to WORKDIR
 COPY --from=client-builder --chown=django:django ${APP_HOME} ${APP_HOME}
 
@@ -89,7 +84,6 @@ RUN chown django:django ${APP_HOME}
 USER django
 
 RUN DATABASE_URL="" \
-  CELERY_BROKER_URL="" \
   PULSAR_URL="" \
   NEW_MESSAGE_TOPIC="" \
   DJANGO_SETTINGS_MODULE="config.settings.test" \

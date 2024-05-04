@@ -25,16 +25,6 @@ spec:
         - args:
             - /start
           env:
-            - name: CELERY_FLOWER_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  key: CELERY_FLOWER_PASSWORD
-                  name: djangoc
-            - name: CELERY_FLOWER_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: CELERY_FLOWER_USER
-                  name: djangoc
             - name: DJANGO_ACCOUNT_ALLOW_REGISTRATION
               valueFrom:
                 configMapKeyRef:
@@ -120,11 +110,6 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_USER
                   name: postgresc
-            - name: REDIS_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: REDIS_URL
-                  name: djangoc
             - name: WEB_CONCURRENCY
               valueFrom:
                 configMapKeyRef:
