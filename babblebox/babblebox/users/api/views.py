@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from babblebox.api.logging_mixin import LoggingMixin
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.mixins import ListModelMixin, RetrieveModelMixin, UpdateModelMixin
@@ -10,7 +11,7 @@ from .serializers import UserSerializer
 User = get_user_model()
 
 
-class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet):
+class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet, LoggingMixin):
     serializer_class = UserSerializer
     queryset = User.objects.all()
     lookup_field = "pk"
