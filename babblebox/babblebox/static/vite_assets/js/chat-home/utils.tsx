@@ -6,15 +6,18 @@ const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 console.log("Running in vite in mode: " + mode)
 
-export var api = ""
+export var api_url = ""
+export var static_url = ""
 if (mode === 'production') {
-  api = "https://babblebox-app.shivamrastogi.com/api"
+  api_url = "https://babblebox-app.shivamrastogi.com/api"
+  static_url = "https://babblebox-app.shivamrastogi.com/static"
 } else if (mode === 'development') {
-  api = "http://localhost:8000/api"
+  api_url = "http://localhost:8000/api"
+  static_url = "http://localhost:8000/static"
 }
 
 // Create an axios instance and csrf token on each post reaquest when this instance is used by default
 export const axiosInstance = axios.create({
-  baseURL: api,
+  baseURL: api_url,
   headers: {'X-CSRFToken': csrf_token}
 });

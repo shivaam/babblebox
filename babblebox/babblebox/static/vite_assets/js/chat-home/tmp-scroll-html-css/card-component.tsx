@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Card, CardContent, CardMedia, IconButton, Typography } from '@mui/material';
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import { useNavigate } from 'react-router-dom';
-import { api } from '../utils';
+import { static_url } from '../utils';
 
 export interface CardComponentProps {
     image: string;
@@ -12,7 +12,7 @@ export interface CardComponentProps {
 
 const CardComponent: React.FC<CardComponentProps> = ( props ) => {
   const [isHovering, setIsHovering] = useState(false); // State to track hover
-  const url = api;
+  const url = `${static_url}/test-images`;
   const navigate = useNavigate();
 
   const handleMouseEnter = () => {
