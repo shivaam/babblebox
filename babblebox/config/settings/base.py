@@ -4,6 +4,7 @@ Base settings to build other settings files upon.
 from pathlib import Path
 import os
 import environ
+import logging
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent.parent
 
@@ -13,17 +14,17 @@ APPS_DIR = BASE_DIR / "babblebox"
 env = environ.Env()
 
 if env.ENVIRON.get("DJANGO_READ_LOCAL_ENV_FILE", default=False):
-    print(f"Using local env file. BASE_DIR: {BASE_DIR}")
+    logging.info(f"Using local env file. BASE_DIR: {BASE_DIR}")
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.django"))
     environ.Env.read_env(os.path.join(BASE_DIR, ".envs/.local/.postgres"))
-    print(f"Using Database: {env.db('DATABASE_URL')['HOST']}")
+    logging.info(f"Using Database: {env.db('DATABASE_URL')['HOST']}")
 
 
 # GENERAL
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#debug
 DEBUG = True
-DISABLE_PULSAR_CLIENT = env("DISABLE_PULSAR_CLIENT", default=False)
+DISABLE_PULSAR_CLIENT = env("DISABLE_PULSAR_CLIENT", default=True)
 
 # Local time zone. Choices are
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

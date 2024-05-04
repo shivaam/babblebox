@@ -93,15 +93,14 @@ class ChatViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         with transaction.atomic():
-            print("Creating chat")
             # Save the Chat instance created by the serializer
             # Assuming the request includes the owner information.
             # You may need to adjust this based on how your owner is determined (e.g., from the request user)
             owner = self.request.user
             chat = serializer.save(owner=owner)
-
             # Create a Participant instance for the owner with the necessary flags
             ChatParticipant.objects.create(chat=chat, user=owner, has_read_access=True, has_write_access=True)
+            logger.info(f"Chat created with id: {chat.id}")
 
 
     def get_permissions(self):

@@ -1,25 +1,25 @@
+import logging
 import pulsar
 from avro.io import DatumWriter, BinaryEncoder
 import io
 from django.conf import settings
-
 from pulsar.schema import BytesSchema
 
 topic = settings.NEW_MESSAGE_TOPIC
 client = None
 producer = None
-if settings.DISABLE_PULSAR_CLIENT is True:
-    print("Pulsar is enabled")
+if settings.DISABLE_PULSAR_CLIENT is False:
+    logging.info("Pulsar is enabled")
     try:
         client = pulsar.Client(settings.PULSAR_URL)
-        print("No client created")
         producer = client.create_producer(topic, schema=BytesSchema())
     except Exception as e:
-        print("Exception raised" + str(e))
+        logging.error("Exception raised" + str(e))
+else:
+    logging.info("Pulsar is disabled")
 
 class PulsarClient:
     @classmethod
-    # Function to serialize Django model to Avro
     def serialize_to_avro(cls, data, avro_schema):
         writer = DatumWriter(avro_schema)
         bytes_writer = io.BytesIO()
@@ -33,6 +33,8 @@ class PulsarClient:
         try:
             serialized_data = PulsarClient.serialize_to_avro(data, schema)
             producer.send(serialized_data)
-            print("Message sent to pulsar for new transcription")
+            logging.info(f"Message sent to pulsar for new transcription: {data}")
         except Exception as e:
-            print("Exception raised" + str(e))
+            # convert below line to better string formatting
+            logging.error("Failed sending pulsar message with data: {}".format(data))
+            logging.error("Exception raised: " + str(e))
