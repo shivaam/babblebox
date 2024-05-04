@@ -25,16 +25,6 @@ spec:
         - args:
             - /start
           env:
-            - name: CELERY_FLOWER_PASSWORD
-              valueFrom:
-                configMapKeyRef:
-                  key: CELERY_FLOWER_PASSWORD
-                  name: djangoc
-            - name: CELERY_FLOWER_USER
-              valueFrom:
-                configMapKeyRef:
-                  key: CELERY_FLOWER_USER
-                  name: djangoc
             - name: DJANGO_ACCOUNT_ALLOW_REGISTRATION
               valueFrom:
                 configMapKeyRef:
@@ -120,16 +110,11 @@ spec:
                 configMapKeyRef:
                   key: POSTGRES_USER
                   name: postgresc
-            - name: REDIS_URL
-              valueFrom:
-                configMapKeyRef:
-                  key: REDIS_URL
-                  name: djangoc
             - name: WEB_CONCURRENCY
               valueFrom:
                 configMapKeyRef:
                   key: WEB_CONCURRENCY
                   name: djangoc
-          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:latest-7df064cb90b7
+          image: 590183870911.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django:latest-948ead151974
           name: django
       restartPolicy: Always

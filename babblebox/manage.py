@@ -2,10 +2,11 @@
 import os
 import sys
 from pathlib import Path
+import logging
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings.local")
-    print(f"Starting local server from path: {os.getcwd()}")
+    logging.info(f"Starting local server from path: {os.getcwd()}")
     try:
         from django.core.management import execute_from_command_line
     except ImportError:

@@ -3,6 +3,8 @@ import { List, ListItem, ListItemText, Paper, Box, Typography } from '@mui/mater
 import axios from 'axios';
 import {axiosInstance} from "../utils";
 import {RecordNewChatMessage} from "./record-new-chat-message";
+import { formatDistanceToNow } from 'date-fns';
+import { RecordNewChatMessage2 } from './record-chat-message-2';
 
 interface ChatMessage {
   id: string;
@@ -10,6 +12,8 @@ interface ChatMessage {
   audio_message_id: string;
   timestamp: Date;
   image_id: string | null;
+  display_time: string;
+  owner_username: string;
 }
 
 interface Props {
@@ -28,7 +32,15 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
       try {
         // Replace with your actual endpoint, append the chatId to fetch messages for a specific chat
         const response = await axiosInstance.get<ChatMessage[]>(`ChatMessage/?chat_id=${chatId}`);
-        setChatMessages(response.data);
+        var messageData = response.data;
+        messageData.sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
+        //convert the timestamp to a human readable format cool format like x mins ago using some library
+        messageData.forEach((message) => {
+          message.display_time = formatDistanceToNow(new Date(message.timestamp), { addSuffix: true });
+        });
+
+
+        setChatMessages(messageData);
         setError(null);
       } catch (error) {
         setError('Failed to fetch chat messages.');
@@ -43,9 +55,10 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
     }
   }, [chatId]); // Refetch when chatId changes
 
+   //replace message id with number from 1 to N
   return (
     <Box sx={{ height: '100%', overflow: 'auto' }}>
-      <RecordNewChatMessage chatId={chatId} />
+      <RecordNewChatMessage2 chatId={chatId} />
       <Paper sx={{ maxHeight: '100%', overflow: 'auto' }}>
         <List>
           {loading && <ListItem><ListItemText primary="Loading messages..." /></ListItem>}
@@ -53,8 +66,8 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
           {chatMessages.map((message) => (
             <ListItem key={message.id} onClick={() => onAudioMessageSelect(message.audio_message_id, message.image_id)}>
               <ListItemText
-                primary={<Typography variant="body1">Message ID: {message.id}</Typography>}
-                secondary={`Timestamp: ${new Date(message.timestamp).toLocaleString()}`}
+                primary={`From: ${message.owner_username}`}
+                secondary={message.display_time}
               />
             </ListItem>
           ))}

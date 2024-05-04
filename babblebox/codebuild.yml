@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: ./compose/production/django/Dockerfile
+    image: ${DOCKER_REGISTRY}/babblebox_production_django
+
+  traefik:
+    build:
+      context: .
+      dockerfile: ./compose/production/traefik/Dockerfile
+    image: ${DOCKER_REGISTRY}/babblebox_production_traefik

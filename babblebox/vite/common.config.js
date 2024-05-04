@@ -1,18 +1,22 @@
 import { defineConfig, loadEnv } from 'vite';
 import { resolve, join } from 'path';
 import react from '@vitejs/plugin-react'
+
 import path from 'path';
+
 
 
 export default defineConfig((mode) => {
     const env = loadEnv(mode, process.cwd(), '');
-    console.log("***##" + path.resolve(__dirname, '..', 'node_modules/bootstrap'))
     const INPUT_DIR = './babblebox/static/vite_assets';
     const OUTPUT_DIR =  './babblebox/static/vite_assets_dist';
-    console.log("Input directory" + join(INPUT_DIR, '/js/apps/vendors.js'))
+    console.log("Current working dir: " + resolve("./"));
 
     return {
-        plugins: [react(      {fastRefresh: false})],
+        plugins: [
+            react({fastRefresh: false}),
+        ],
+        envDir: './vite',
         root: resolve(INPUT_DIR),
         base: '/static/',
         server: {
@@ -30,11 +34,10 @@ export default defineConfig((mode) => {
             outDir: resolve(OUTPUT_DIR),
             rollupOptions: {
                 input: {
-                    //vendors: join(INPUT_DIR, '/js/apps/vendors.js'),
-                    project: join(INPUT_DIR, '/js/apps/project.js'),
+                    project: join(INPUT_DIR, 'js/apps/project.js'),
                     //home: join(INPUT_DIR, '/js/apps/home.js'),
-                    css: join(INPUT_DIR, '/css/project.css'),
-                    page: join(INPUT_DIR, 'js/chat-home/index.tsx')
+                    page: join(INPUT_DIR, 'js/chat-home/tmp-scroll-html-css/index.tsx'),
+                    //css: join(INPUT_DIR, '/css/project.css')
                 },
             },
         },

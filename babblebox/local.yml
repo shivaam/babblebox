@@ -12,8 +12,6 @@ services:
     image: babblebox_local_django
     container_name: babblebox_local_django
     depends_on:
-      - postgres
-      - redis
       - mailpit
     volumes:
       - .:/app:z

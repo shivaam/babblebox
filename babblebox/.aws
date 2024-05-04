@@ -1,19 +1,8 @@
 aws ecr create-repository --repository-name babblebox_production_django
-aws ecr create-repository --repository-name babblebox_production_postgres
 aws ecr create-repository --repository-name babblebox_production_traefik
-aws ecr create-repository --repository-name babblebox_production_celeryworker
-aws ecr create-repository --repository-name babblebox_production_celerybeat
-aws ecr create-repository --repository-name babblebox_production_flower
-aws ecr create-repository --repository-name babblebox_production_awscli
-
 
 docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_django
-docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_postgres
 docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_traefik
-docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_celeryworker
-docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_celerybeat
-docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_flower
-docker push 891376962618.dkr.ecr.us-east-1.amazonaws.com/babblebox_production_awscli
 
 
 aws ecr describe-repositories --repository-names babblebox_production_django --query 'repositories[0].repositoryUri'

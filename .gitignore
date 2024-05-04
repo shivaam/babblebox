@@ -1,0 +1,6 @@
+babblebox/.envs/.local/.django
+babblebox/.envs/.production/.postgres
+babblebox/k8s/-postgres-configmap.yaml
+babblebox/k8s/-django-configmap.yaml
+.vscode
+.DS_Store

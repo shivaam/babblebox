@@ -1,17 +1,42 @@
-import React, { useState } from 'react';
-import { Box, Grid, Paper } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import ChatList from "./chat-list";
 import ChatMessageList from "./chat-message-list";
 import ImageTranscription from "./image-transcription";
+import { deepPurple, amber, blueGrey, grey } from '@mui/material/colors';
+import { ChatParticipants } from './chat-participants-list';
+import { axiosInstance } from '../utils';
+import { Chat } from '../tmp-scroll-html-css/chat-sections';
 
-const MainPage: React.FC = () => {
-  const [selectedChatId, setSelectedChatId] = useState<string | null>(null);
+const MainPage: React.FC<{ chatId: string }> = ({ chatId }) => {
+  const selectedChatId = chatId;
+
   const [selectedAudioMessageId, setSelectedAudioMessageId] = useState<string | null>(null);
   const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+  const [chat, setChat] = useState<Chat>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchChats = async () => {
+      setLoading(true);
+      try {
+        console.log(chatId)
+        const response = await axiosInstance.get<Chat[]>(`Chat/${chatId}`);
+        setChat(response.data);
+        setError(null);
+      } catch (error) {
+        setError('Failed to fetch chats.');
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchChats();
+  }, []);
 
   const handleChatSelect = (chatId: string) => {
-    setSelectedChatId(chatId);
-    // Reset audio message and image when a new chat is selected
     setSelectedAudioMessageId(null);
     setSelectedImageId(null);
   };
@@ -22,33 +47,58 @@ const MainPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ flexGrow: 1, p: 2 }}>
-      <Grid container spacing={3}>
-        {/* Chat Messages Column */}
-        <Grid item xs={6} sm={3}>
-          <Paper sx={{ p: 2, textAlign: 'center', color: 'text.secondary', height: '90vh' }}>
-            <ChatList onChatSelect={handleChatSelect} />
-          </Paper>
-        </Grid>
 
-        {/* Audio Messages Column */}
-        <Grid item xs={6} sm={3}>
-          <Paper sx={{ p: 2, textAlign: 'center', color: 'text.secondary', height: '90vh' }}>
-            {selectedChatId && <ChatMessageList chatId={selectedChatId} onAudioMessageSelect={handleAudioMessageSelect} />}
-          </Paper>
-        </Grid>
+    <Box sx={{ flexGrow: 1, p: 2, backgroundColor: 'white', minHeight: '100vh' }}>
+          {`Chat Topic: ${chat?.topic}, Created By: ${chat?.owner_username}`}
 
-        {/* Image and Transcription Column */}
-        <Grid item xs={12} sm={6}>
-          <Paper sx={{ p: 2, textAlign: 'center', color: 'text.secondary', height: '90vh' }}>
-            {selectedAudioMessageId && <ImageTranscription
-                audioMessageId={selectedAudioMessageId}
-                imageId={selectedImageId}
-            />}
-          </Paper>
-        </Grid>
+    <Grid container spacing={4} justifyContent="left" sx={{ height: '90vh', maxHeight: '90vh', overflow: 'hidden' }}>
+
+      {/* Audio Messages Column */}
+      <Grid item xs={12} sm={4} md={3}>
+
+        <Paper elevation={6} sx={{ p: 2, backgroundColor: grey[50], borderRadius: '16px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>
+            Messages
+          </Typography>
+          <ChatMessageList chatId={chatId} onAudioMessageSelect={handleAudioMessageSelect} />
+        </Paper>
       </Grid>
-    </Box>
+      {/* Transcriptions & Notes Column */}
+      <Grid item xs={12} sm={6} md={5}>
+        <Paper elevation={6} sx={{ p: 2, backgroundColor: grey[100], borderRadius: '16px', height: '60vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>
+            Transcriptions & Notes
+          </Typography>
+          {selectedAudioMessageId && <ImageTranscription
+              audioMessageId={selectedAudioMessageId}
+              imageId={selectedImageId}
+          />}
+        </Paper>
+      </Grid>
+      {/* New Right Section */}
+      <Grid item xs={12} sm={2} md={4}>
+        <Paper elevation={6} sx={{ p: 2, backgroundColor: grey[200], borderRadius: '16px', height: '60vh', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ height: '30vh' }}>
+            <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>AI Topics</Typography>
+            {/* Add content for AI Topics */}
+          </Box>
+          <Box sx={{ height: '46vh' }}>
+            <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>Participants</Typography>
+            <ChatParticipants chatId={chatId} />
+          </Box>
+        </Paper>
+      </Grid>
+      <Grid item xs={12} sm={12} md={12}>
+        <Paper elevation={6} sx={{ p: 2, backgroundColor: grey[200], borderRadius: '16px', height: '20vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+          <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>AI Tips</Typography>
+          {/* Add content for AI Tips */}
+        </Paper>
+      </Grid>
+    </Grid>
+  </Box>
+
+
+
   );
 };
 

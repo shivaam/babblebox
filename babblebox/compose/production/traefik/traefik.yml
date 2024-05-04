@@ -1,38 +1,26 @@
 log:
   level: DEBUG
 
-accessLog:
-  filePath: /etc/traefik/access.log
+accessLog: {}
+  # filePath: /etc/traefik/access.log - remove {} to enable logs to a file.
 
 entryPoints:
   web:
     # http
     address: ':80'
 
-
   web-secure:
     # https
     address: ':443'
 
-  flower:
-    address: ':5555'
-
-certificatesResolvers:
-  letsencrypt:
-    # https://doc.traefik.io/traefik/https/acme/#lets-encrypt
-    acme:
-      email: 'shivam.riky@gmail.com'
-      storage: /etc/traefik/acme/acme.json
-      # https://doc.traefik.io/traefik/https/acme/#httpchallenge
-      httpChallenge:
-        entryPoint: web
-
 http:
   routers:
     web-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`)'
+      rule: 'Host(`babblebox-app.shivamrastogi.com`) || Host(`localhost`)'
       entryPoints:
         - web
+      middlewares:
+        - csrf
       service: django
     web-secure-router:
       entryPoints:
@@ -40,22 +28,6 @@ http:
       middlewares:
         - csrf
       service: django
-      tls:
-        # https://doc.traefik.io/traefik/routing/routers/#certresolver
-        certResolver: letsencrypt
-        domains:
-          - main: babblebox-app.shivamrastogi.com
-
-    flower-secure-router:
-      rule: 'Host(`babblebox-app.shivamrastogi.com`)'
-      entryPoints:
-        - flower
-      service: flower
-      tls:
-        # https://doc.traefik.io/traefik/master/routing/routers/#certresolver
-        certResolver: letsencrypt
-        domains:
-          - main: babblebox-app.shivamrastogi.com
 
   middlewares:
     csrf:
@@ -69,11 +41,6 @@ http:
       loadBalancer:
         servers:
           - url: http://django:5000
-
-    flower:
-      loadBalancer:
-        servers:
-          - url: http://flower:5555
 
 providers:
   # https://doc.traefik.io/traefik/master/providers/file/

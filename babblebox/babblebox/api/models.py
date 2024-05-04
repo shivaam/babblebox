@@ -8,7 +8,6 @@ from django.db.models import Index
 from django.conf import settings
 
 from config.settings.base import BASE_DIR
-from babblebox.api.whisper.whisper import get_transcription
 
 
 class AudioFile(models.Model):
@@ -24,7 +23,7 @@ class AudioFile(models.Model):
             # Generate a unique ID
             self.id = str(uuid.uuid4())
         super(AudioFile, self).save(*args, **kwargs)
-        print(self.audio)
+        logging.info(f"Uploading audio file: ${self.audio}")
         # Generate transcription after the file is saved
         # Update the transcription fields
         self.file_location = settings.MEDIA_ROOT + "/" + str(self.audio)
@@ -71,6 +70,7 @@ class Chat(models.Model):
 
 
 class ChatParticipant(models.Model):
+    # change the chat_id and user_id to chat and user
     chat = models.ForeignKey(Chat, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     has_read_access = models.BooleanField(default=True)
@@ -120,12 +120,10 @@ class ChatMessage(models.Model):
 
     @classmethod
     def get_avro_schema(cls):
-        schema_file = os.path.join(BASE_DIR, 'babblebox/api/schemas/chat_message_schema.avsc')
-        print(BASE_DIR)
-        print(schema_file)
+        schema_file = os.path.join(BASE_DIR, 'babblebox/api/clients/schemas/chat_message_schema.avsc')
+        logging.info(f"Schema file path: {schema_file}")
         with open(schema_file, 'r') as file:
             schema = parse(file.read())
-            print(schema)
             return schema
 
 

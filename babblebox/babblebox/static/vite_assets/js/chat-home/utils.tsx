@@ -1,6 +1,20 @@
 import axios from 'axios'
-import https from 'https'
 
+//const api = import.meta.env.VITE_API_PATH as string;
+const mode = import.meta.env.MODE as string;
+const csrf_token = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+console.log("Running in vite in mode: " + mode)
+
+var api = ""
+if (mode === 'production') {
+  api = "http://localhost:5001/api"
+} else if (mode === 'development') {
+  api = "http://localhost:8000/api"
+}
+
+// Create an axios instance and csrf token on each post reaquest when this instance is used by default
 export const axiosInstance = axios.create({
-  baseURL: 'https://babblebox-app.shivamrastogi.com/api/'
+  baseURL: api,
+  headers: {'X-CSRFToken': csrf_token}
 });

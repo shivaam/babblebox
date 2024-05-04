@@ -45,32 +45,9 @@ To run the tests, check your test coverage, and generate an HTML coverage report
 
 Moved to [Live reloading and SASS compilation](https://cookiecutter-django.readthedocs.io/en/latest/developing-locally.html#sass-compilation-live-reloading).
 
-### Celery
 
-This app comes with Celery.
-
-To run a celery worker:
-
-```bash
-cd babblebox
-celery -A config.celery_app worker -l info
-```
-
-Please note: For Celery's import magic to work, it is important _where_ the celery commands are run. If you are in the same folder with _manage.py_, you should be right.
-
-To run [periodic tasks](https://docs.celeryq.dev/en/stable/userguide/periodic-tasks.html), you'll need to start the celery beat scheduler service. You can start it as a standalone process:
-
-```bash
-cd babblebox
-celery -A config.celery_app beat
-```
 
 or you can embed the beat service inside a worker with the `-B` option (not recommended for production use):
-
-```bash
-cd babblebox
-celery -A config.celery_app worker -B -l info
-```
 
 ### Email Server
 
@@ -96,4 +73,15 @@ Bootstrap v5 is installed using npm and customised by tweaking your variables in
 
 You can find a list of available variables [in the bootstrap source](https://github.com/twbs/bootstrap/blob/v5.1.3/scss/_variables.scss), or get explanations on them in the [Bootstrap docs](https://getbootstrap.com/docs/5.1/customize/sass/).
 
-Bootstrap's javascript as well as its dependencies are concatenated into a single file: `static/js/vendors.js`.
+
+
+
+# Local Development
+    ```
+    export DJANGO_READ_LOCAL_ENV_FILE=True
+    python manage.py runserver # it loads the env variables from .envs/local file
+    npm run dev # runs the vite js server to provide the js
+    ```
+
+
+# 
