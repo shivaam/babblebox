@@ -37,6 +37,9 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
+        # redirect to home page is user is authenticated
+        if self.request.user.is_authenticated:
+            return reverse("home")
         return reverse("users:detail", kwargs={"pk": self.request.user.pk})
 
 

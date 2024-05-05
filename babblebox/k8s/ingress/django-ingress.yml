@@ -4,6 +4,8 @@ metadata:
   name: django-ingress
   annotations:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/client-max-body-size: 8m
+    nginx.ingress.kubernetes.io/proxy-body-size: 8m
 
 spec:
   ingressClassName: nginx

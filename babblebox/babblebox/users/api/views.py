@@ -10,15 +10,14 @@ from .serializers import UserSerializer
 
 User = get_user_model()
 
-
 class UserViewSet(RetrieveModelMixin, ListModelMixin, UpdateModelMixin, GenericViewSet, LoggingMixin):
-    serializer_class = UserSerializer
     queryset = User.objects.all()
+    serializer_class = UserSerializer
     lookup_field = "pk"
 
     def get_queryset(self, *args, **kwargs):
         assert isinstance(self.request.user.id, int)
-        return self.queryset
+        return User.objects.all()
 
     @action(detail=False)
     def me(self, request):
