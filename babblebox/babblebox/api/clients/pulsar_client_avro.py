@@ -30,11 +30,12 @@ class PulsarClient:
 
     @classmethod
     def send_message(cls, data, schema):
+        modified_data = {key: value for key, value in data.items() if key != 'transcription_en'}
         try:
-            serialized_data = PulsarClient.serialize_to_avro(data, schema)
+            serialized_data = PulsarClient.serialize_to_avro(modified_data, schema)
             producer.send(serialized_data)
-            logging.info(f"Message sent to pulsar for new transcription: {data}")
+            logging.info(f"Message sent to pulsar for new transcription: {modified_data}")
         except Exception as e:
             # convert below line to better string formatting
-            logging.error("Failed sending pulsar message with data: {}".format(data))
+            logging.error("Failed sending pulsar message with data: {}".format(modified_data))
             logging.error("Exception raised: " + str(e))

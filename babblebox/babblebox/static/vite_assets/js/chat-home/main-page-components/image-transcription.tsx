@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Box, Paper, Typography, CircularProgress } from '@mui/material';
-import {axiosInstance} from "../utils";
+import { axiosInstance } from "../utils";
 
 interface AudioFile {
   id: string;
@@ -67,15 +67,23 @@ const ImageTranscription: React.FC<Props> = ({ audioMessageId, imageId }) => {
                 <audio controls src={audioFile.audio}>
                   Your browser does not support the audio element.
                 </audio>
-                <Typography variant="body1">Transcription (EN): {audioFile.transcription_en}</Typography>
-                <Typography variant="body1">Transcription (Original): {audioFile.transcription_original}</Typography>
+                {audioFile.transcription_en == null || audioFile.transcription_en.length < 1 ? (
+                  <Typography variant="body1">Generating transcription using OpenAI Whisper....</Typography>
+                ) : (
+                  <>
+                    <Typography variant="body1">Transcription (EN): {audioFile.transcription_en}</Typography>
+                  </>
+                )}
               </Box>
             )}
-            {imageFile && (
-              <Box>
-                <img src={imageFile.image} alt="Chat related" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-              </Box>
-            )}
+            {imageFile == null || imageFile.image == null ? (
+              <Typography variant="body1">Genearting images using Dalle....</Typography>
+            ) :
+              (
+                <Box>
+                  <img src={imageFile.image} alt="Chat related" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+                </Box>
+              )}
           </>
         )}
       </Paper>
