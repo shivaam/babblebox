@@ -1,6 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
-import { CreateChatModal } from './create-chat-model';
+import { CreateChatModal } from './create-chat-modal';
 import { ChatSections } from './chat-sections';
 
 const Home: React.FC = () => {

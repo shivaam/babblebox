@@ -14,8 +14,6 @@ export const ChatDetails: React.FC<Props> = () => {
 
    //replace message id with number from 1 to N
 return (
-    <Box sx={{ height: '100%', overflow: 'auto' }}>
      <MainPage chatId={chatId || ''} />
-    </Box>
-);
+  );
 };

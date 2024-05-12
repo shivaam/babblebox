@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, FormControlLabel, Checkbox, Typography, Modal, Snackbar, Alert, Autocomplete } from '@mui/material';
+import { Box, Button, TextField, FormControlLabel, Checkbox, Typography, Modal, Snackbar, Alert, Autocomplete, styled } from '@mui/material';
 import { axiosInstance } from "../utils";
 
 const style = {
@@ -7,9 +7,9 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: { xs: '90%', sm: 400 }, // Use 90% width on extra-small screens, and 400px width starting from small screens
     bgcolor: 'background.paper',
-    border: '2px solid #000',
+    border: '1px solid #000',
     boxShadow: 24,
     p: 4,
 };
@@ -91,7 +91,7 @@ export const AddChatParticipant = ({ chatId, open, handleClose }) => {
                         />
                         <FormControlLabel
                             control={<Checkbox checked={hasWriteAccess} onChange={(e) => setHasWriteAccess(e.target.checked)} />}
-                            label="Write Access"
+                            label="Allow user to send messages"
                         />
                         <Button type="submit" fullWidth variant="contained" disabled={loading} sx={{ mt: 3, mb: 2 }}>
                             {loading ? 'Adding...' : 'Submit'}

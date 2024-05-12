@@ -59,7 +59,7 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
   return (
     <Box sx={{ height: '100%', overflow: 'auto' }}>
       <RecordNewChatMessage2 chatId={chatId} />
-      <Paper sx={{ maxHeight: '100%', overflow: 'auto' }}>
+      <Paper sx={{ maxHeight: '100%', overflow: 'auto'}}>
         <List>
           {loading && <ListItem><ListItemText primary="Loading messages..." /></ListItem>}
           {error && <ListItem><ListItemText primary={error} /></ListItem>}

@@ -5,6 +5,7 @@ import StopIcon from '@mui/icons-material/Stop';
 import Typography from '@mui/material/Typography';
 import ysFixWebmDuration from 'fix-webm-duration';
 import { axiosInstance } from '../utils';
+import { Card, CardContent, LinearProgress, Tooltip } from '@mui/material';
 
 export const RecordNewChatMessage2 = ({ chatId }) => {
   const [isRecording, setIsRecording] = useState(false);
@@ -79,14 +80,24 @@ export const RecordNewChatMessage2 = ({ chatId }) => {
   };
 
   return (
-    <div>
-      <Typography variant="h6">{isRecording ? 'Recording...' : 'Click to record'}</Typography>
-      <IconButton color="primary" onClick={isRecording ? stopRecording : startRecording}>
-        {isRecording ? <StopIcon /> : <MicIcon />}
-      </IconButton>
-      {recordedAudio && (
-        <audio src={recordedAudio} controls />
-      )}
-    </div>
+    <Card sx={{ maxWidth: 345, m: 2, width: '80%'}}>
+      <CardContent sx={{ textAlign: 'center' }}>
+        <Tooltip title={isRecording ? 'Stop Recording' : 'Record New Message'}>
+          <IconButton
+            color="primary"
+            onClick={isRecording ? stopRecording : startRecording}
+            sx={{ fontSize: 24 }}
+          >
+            {isRecording ? <StopIcon sx={{ fontSize: 40 }} /> : <MicIcon sx={{ fontSize: 30 }} />}
+          </IconButton>
+        </Tooltip>
+        {isRecording && (
+          <LinearProgress color="secondary" sx={{ width: '100%', mt: 1 }} />
+        )}
+        {recordedAudio && (
+          <audio src={recordedAudio} controls style={{ width: '100%', marginTop: 8 }} />
+        )}
+      </CardContent>
+    </Card>
   );
 };

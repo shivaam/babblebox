@@ -8,17 +8,6 @@ interface IRecordNewChatMessageProps {
 }
 
 export const RecordNewChatMessage: React.FC<IRecordNewChatMessageProps> = ({chatId}) => {
-
-  // const addAudioElement = (blob: Blob) => {
-  //   console.log(blob);
-  //   uploadAudio(blob)
-  //   const url = URL.createObjectURL(blob);
-  //   const audio = document.createElement('audio');
-  //   audio.src = url;
-  //   audio.controls = true;
-  //   document.body.appendChild(audio);
-  // };
-  //
   const {
     startRecording,
     stopRecording,

@@ -269,6 +269,18 @@ LOGGING = {
         }
     },
     "root": {"level": "DEBUG", "handlers": ["console"]},
+    "loggers": {
+        'django_storages': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    }
 }
 
 # django-allauth

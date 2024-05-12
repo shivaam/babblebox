@@ -7,7 +7,7 @@ from .permissions import IsOwnerOrReadOnly, IsChatParticipantOrOwnerForChatObj
 from .clients.pulsar_client_avro import PulsarClient
 from .logging_mixin import LoggingMixin
 from .models import AudioFile, ChatMessage, Chat, ImageFile, ChatParticipant
-from .serializers import AudioFileSerializer, ChatMessageSerializer, ChatParticipantSerializer, ChatSerializer, ImageFileSerializer
+from .serializers import AudioFileSerializer, AudioMessageSerializerWithoutFile, ChatMessageSerializer, ChatParticipantSerializer, ChatSerializer, ImageFileSerializer
 from django.db import transaction
 from django.db.models import Q
 from django.core.exceptions import PermissionDenied
@@ -16,6 +16,15 @@ class AudioFileViewSet(LoggingMixin, viewsets.ModelViewSet):
     queryset = AudioFile.objects.all()
     serializer_class = AudioFileSerializer
 
+    def get_serializer_class(self, *args, **kwargs):
+        # Check if the id is set in the kwargs
+        print(self.kwargs)
+        no_file = self.request.query_params.get('include_file')
+        if self.request.method == 'GET' and 'no_file' in self.request.query_params:
+            # For GET requests to retrieve a single instance
+           return AudioMessageSerializerWithoutFile
+        # For other requests (GET for retrieving all instances, POST, PUT, PATCH, DELETE)
+        return AudioFileSerializer
 
 class ImageFileViewSet(LoggingMixin, viewsets.ModelViewSet):
     queryset = ImageFile.objects.all()
@@ -142,7 +151,11 @@ class ChatMessageViewSet(LoggingMixin, viewsets.ModelViewSet):
         by filtering against a `chat_id` query parameter in the URL.
         """
         queryset = ChatMessage.objects.all().select_related('owner')
+        limit = self.request.query_params.get('limit')
+
         chat_id = self.request.query_params.get('chat_id')
         if chat_id is not None:
             queryset = queryset.filter(chat_id=chat_id)
+        if limit is not None:
+            queryset = queryset.order_by('-timestamp')[:int(limit)]
         return queryset

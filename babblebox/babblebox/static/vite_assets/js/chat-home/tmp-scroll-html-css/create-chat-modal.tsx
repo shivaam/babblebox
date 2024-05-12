@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Box, Button, TextField, FormControlLabel, Checkbox, Typography, Modal, Snackbar, Alert } from '@mui/material';
 import { axiosInstance } from "../utils";  // Ensure axiosInstance is correctly imported from utilities
 
-const style = {
+const responsiveStyle = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: { xs: '90%', sm: 400 }, // Use 90% width on extra-small screens, and 400px width starting from small screens
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
@@ -71,7 +71,7 @@ export const CreateChatModal = () => {
           aria-labelledby="create-chat-modal"
           aria-describedby="create-new-chat-form"
         >
-          <Box sx={style}>
+          <Box sx={responsiveStyle}>
             <Typography id="create-chat-modal-title" variant="h6" component="h2">
               New Chat
             </Typography>

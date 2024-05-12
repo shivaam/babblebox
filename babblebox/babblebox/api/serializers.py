@@ -5,6 +5,12 @@ from .models import AudioFile, ChatMessage, Chat, ImageFile, ChatParticipant
 from django.contrib.auth.models import User
 
 
+class AudioMessageSerializerWithoutFile(serializers.ModelSerializer):
+    class Meta:
+        model = AudioFile
+        fields = ['id', 'transcription_en']
+
+
 class AudioFileSerializer(serializers.ModelSerializer):
     class Meta:
         model = AudioFile
@@ -38,11 +44,12 @@ class ChatMessageSerializer(serializers.ModelSerializer):
     audio_file = AudioFileSerializer(write_only=True)
     id = serializers.CharField(read_only=True)
     owner_username = serializers.CharField(source='owner.username', read_only=True)
+    transcription_en = serializers.CharField(source='audio_message_id.transcription_en', read_only=True)
 
     class Meta:
         model = ChatMessage
-        fields = ['id', 'chat_id', 'audio_message_id', 'timestamp', 'audio_file', 'image_id', 'owner', 'owner_username']
-        read_only_fields = ('audio_message_id', 'timestamp', 'id', 'owner')
+        fields = ['id', 'chat_id', 'audio_message_id', 'timestamp', 'audio_file', 'image_id', 'owner', 'owner_username', 'transcription_en']
+        read_only_fields = ('audio_message_id', 'timestamp', 'id', 'owner', 'transcription_en')
 
     def create(self, validated_data):
         # No need to use the serializer as we can directly create the audioFile
