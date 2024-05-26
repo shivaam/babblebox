@@ -6,10 +6,15 @@ import Typography from '@mui/material/Typography';
 import ysFixWebmDuration from 'fix-webm-duration';
 import { axiosInstance } from '../utils';
 import { Card, CardContent, LinearProgress, Tooltip } from '@mui/material';
+import { Snackbar } from '@mui/material';
+import { Alert } from '@mui/material';
 
-export const RecordNewChatMessage2 = ({ chatId }) => {
+export const RecordNewChatMessage2 = ({ chatId, refreshChatMessage }) => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordedAudio, setRecordedAudio] = useState(null);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('');
+  const [snackbarSeverity, setSnackbarSeverity] = useState();
   const mediaRecorderRef = useRef<MediaRecorder>();
   const mediaParts = useRef([]);
   const startTime = useRef<any>(null);
@@ -24,6 +29,10 @@ export const RecordNewChatMessage2 = ({ chatId }) => {
     mediaRecorderRef.current.start();
     startTime.current = Date.now();
     setIsRecording(true);
+  };
+
+  const handleSnackbarClose = () => {
+    setSnackbarOpen(false);
   };
 
   const stopRecording = () => {
@@ -62,9 +71,16 @@ export const RecordNewChatMessage2 = ({ chatId }) => {
     axiosInstance.post('ChatMessage/', formData)
       .then(response => {
         console.log(response.data);
+        setSnackbarMessage('Message sent successfully');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        refreshChatMessage();
       })
       .catch(error => {
         console.error(error);
+        setSnackbarMessage('Failed to send message');
+        setSnackbarSeverity('error');
+        setSnackbarOpen(true);
       });
   };
 
@@ -80,6 +96,7 @@ export const RecordNewChatMessage2 = ({ chatId }) => {
   };
 
   return (
+    <>
     <Card sx={{ maxWidth: 345, m: 2, width: '80%'}}>
       <CardContent sx={{ textAlign: 'center' }}>
         <Tooltip title={isRecording ? 'Stop Recording' : 'Record New Message'}>
@@ -94,10 +111,13 @@ export const RecordNewChatMessage2 = ({ chatId }) => {
         {isRecording && (
           <LinearProgress color="secondary" sx={{ width: '100%', mt: 1 }} />
         )}
-        {recordedAudio && (
-          <audio src={recordedAudio} controls style={{ width: '100%', marginTop: 8 }} />
-        )}
       </CardContent>
     </Card>
+    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+      <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+        {snackbarMessage}
+      </Alert>
+    </Snackbar>
+    </>
   );
 };

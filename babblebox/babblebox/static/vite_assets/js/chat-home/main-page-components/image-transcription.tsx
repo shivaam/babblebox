@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Paper, Typography, CircularProgress } from '@mui/material';
-import { axiosInstance } from "../utils";
-
-interface AudioFile {
-  id: string;
-  audio: string; // URL to the audio file
-  transcription_en: string;
-  transcription_original: string;
-  file_location: string;
-  upload_timestamp: Date;
-}
-
-interface ImageFile {
-  id: string;
-  image: string; // URL to the image file
-  file_location: string;
-  upload_timestamp: Date;
-}
+// ImageTranscription.tsx
+import React from 'react';
+import { Box, Grid, Paper } from '@mui/material';
+import ImageFetcher from './image-transcription-display/image-fetcher';
+import AudioFetcher from './image-transcription-display/audio-fetcher';
 
 interface Props {
   audioMessageId: string; // Received from the selected chat message
@@ -24,69 +10,20 @@ interface Props {
 }
 
 const ImageTranscription: React.FC<Props> = ({ audioMessageId, imageId }) => {
-  const [audioFile, setAudioFile] = useState<AudioFile | null>(null);
-  const [imageFile, setImageFile] = useState<ImageFile | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchFiles = async () => {
-      setLoading(true);
-      try {
-        // Fetch Audio File
-        if (audioMessageId) {
-          const audioResponse = await axiosInstance.get<AudioFile>(`AudioFile/${audioMessageId}`);
-          setAudioFile(audioResponse.data);
-        }
-        // Fetch Image File if imageId is not null
-        if (imageId) {
-          const imageResponse = await axiosInstance.get<ImageFile>(`ImageFile/${imageId}`);
-          setImageFile(imageResponse.data);
-        }
-        setError(null);
-      } catch (error) {
-        setError('Failed to fetch files.');
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchFiles();
-  }, [audioMessageId, imageId]);
-
   return (
     <Box sx={{ height: '100%', overflow: 'auto', p: 2 }}>
-      <Paper sx={{ maxHeight: '100%', overflow: 'auto' }}>
-        {loading && <CircularProgress />}
-        {error && <Typography variant="body1" color="error">{error}</Typography>}
-        {!loading && !error && (
-          <>
-            {audioFile && (
-              <Box>
-                <audio controls src={audioFile.audio}>
-                  Your browser does not support the audio element.
-                </audio>
-                {audioFile.transcription_en == null || audioFile.transcription_en.length < 1 ? (
-                  <Typography variant="body1">Generating transcription using OpenAI Whisper....</Typography>
-                ) : (
-                  <>
-                    <Typography variant="body1">Transcription (EN): {audioFile.transcription_en}</Typography>
-                  </>
-                )}
-              </Box>
-            )}
-            {imageFile == null || imageFile.image == null ? (
-              <Typography variant="body1">Genearting images using Dalle....</Typography>
-            ) :
-              (
-                <Box>
-                  <img src={imageFile.image} alt="Chat related" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                </Box>
-              )}
-          </>
-        )}
-      </Paper>
+      <Grid container direction="column" spacing={2} sx={{ height: '100%' }}>
+        <Grid item xs={3} sx={{ height: '25%' }}>
+          <Paper sx={{ height: '100%', overflow: 'auto', p: 2 }}>
+            {audioMessageId && <AudioFetcher audioMessageId={audioMessageId} />}
+          </Paper>
+        </Grid>
+        <Grid item xs={9} sx={{ height: '75%' }}>
+          <Paper sx={{ height: '100%', overflow: 'auto', p: 2 }}>
+            {imageId && <ImageFetcher imageId={imageId} />}
+          </Paper>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

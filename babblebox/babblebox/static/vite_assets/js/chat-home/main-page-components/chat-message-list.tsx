@@ -55,7 +55,7 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
    //replace message id with number from 1 to N
   return (
     <Box sx={{ height: '100%', overflow: 'auto' }}>
-      <RecordNewChatMessage2 chatId={chatId} />
+      <RecordNewChatMessage2 chatId={chatId} refreshChatMessage={fetchChatMessages} />
       <IconButton
         onClick={fetchChatMessages}
         sx={{ position: 'relative', top: '-10px', left: '90%'}}
@@ -63,16 +63,28 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
       >
         <RefreshIcon />
       </IconButton>
-      <Paper sx={{ maxHeight: '100%', overflow: 'auto' }}>
+      <Paper sx={{ maxHeight: '100%', overflow: 'auto', p: 2 }}>
         <List>
           {loading && <ListItem><ListItemText primary="Loading messages..." /></ListItem>}
           {error && <ListItem><ListItemText primary={error} /></ListItem>}
           {chatMessages.map((message, index) => (
             <Slide key={message.id} direction="down" in={true} mountOnEnter unmountOnExit>
-              <ListItem onClick={() => onAudioMessageSelect(message.audio_message_id, message.image_id)}>
+              <ListItem
+                onClick={() => onAudioMessageSelect(message.audio_message_id, message.image_id)}
+                sx={{
+                  mb: 1,
+                  borderRadius: 1,
+                  boxShadow: 1,
+                  '&:hover': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                    boxShadow: 3,
+                    cursor: 'pointer'
+                  }
+                }}
+              >
                 <ListItemText
                   primary={`From: ${message.owner_username}`}
-                  secondary={message.display_time}
+                  secondary={`${message.display_time}`}
                 />
               </ListItem>
             </Slide>
