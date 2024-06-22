@@ -29,6 +29,10 @@
         {
             "name": "owner_username",
             "type": "string"
+        },
+        {
+            "name": "ai_tips",
+            "type": "string"
         }
     ]
 }

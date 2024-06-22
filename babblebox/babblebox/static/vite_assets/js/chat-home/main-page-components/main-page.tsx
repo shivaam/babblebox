@@ -7,6 +7,7 @@ import { deepPurple, amber, blueGrey, grey } from '@mui/material/colors';
 import { ChatParticipants } from './chat-participants-list';
 import { axiosInstance } from '../utils';
 import { Chat } from '../tmp-scroll-html-css/chat-sections';
+import ChatTips from './chat-tips';
 
 const MainPage: React.FC<{ chatId: string }> = ({ chatId }) => {
   const selectedChatId = chatId;
@@ -16,6 +17,7 @@ const MainPage: React.FC<{ chatId: string }> = ({ chatId }) => {
   const [chat, setChat] = useState<Chat>();
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [chatMessageId, setChatMessageId] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -41,9 +43,10 @@ const MainPage: React.FC<{ chatId: string }> = ({ chatId }) => {
     setSelectedImageId(null);
   };
 
-  const handleAudioMessageSelect = (audioMessageId: string, imageId: string | null) => {
+  const handleAudioMessageSelect = (chatMessageId: string, audioMessageId: string, imageId: string | null) => {
     setSelectedAudioMessageId(audioMessageId);
     setSelectedImageId(imageId);
+    setChatMessageId(chatMessageId);
   };
 
   return (
@@ -92,6 +95,7 @@ const MainPage: React.FC<{ chatId: string }> = ({ chatId }) => {
         <Grid item xs={12}>
           <Paper elevation={6} sx={{ p: 2, backgroundColor: grey[200], borderRadius: '16px', height: '20vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
             <Typography variant="h6" sx={{ color: blueGrey[700], mb: 2 }}>AI Tips</Typography>
+            <ChatTips chatMessageId={chatMessageId} />
             {/* Add content for AI Tips */}
           </Paper>
         </Grid>

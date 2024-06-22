@@ -19,7 +19,6 @@ class AudioFileViewSet(LoggingMixin, viewsets.ModelViewSet):
     def get_serializer_class(self, *args, **kwargs):
         # Check if the id is set in the kwargs
         print(self.kwargs)
-        no_file = self.request.query_params.get('include_file')
         if self.request.method == 'GET' and 'no_file' in self.request.query_params:
             # For GET requests to retrieve a single instance
            return AudioMessageSerializerWithoutFile

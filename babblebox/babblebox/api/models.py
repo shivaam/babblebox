@@ -102,6 +102,7 @@ class ChatMessage(models.Model):
         null=False,
         blank=False
     )
+    ai_tips = models.TextField(blank=True)
 
     def is_owner(self, user):
         return self.owner == user

@@ -19,7 +19,7 @@ interface ChatMessage {
 
 interface Props {
   chatId: string; // Assuming you pass the selected chatId as a prop
-  onAudioMessageSelect: (audioMessageId: string, imageId: string | null) => void;
+  onAudioMessageSelect: (chatMessageId: string, audioMessageId: string, imageId: string | null) => void;
 }
 
 const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
@@ -70,7 +70,7 @@ const ChatMessages: React.FC<Props> = ({ chatId, onAudioMessageSelect }) => {
           {chatMessages.map((message, index) => (
             <Slide key={message.id} direction="down" in={true} mountOnEnter unmountOnExit>
               <ListItem
-                onClick={() => onAudioMessageSelect(message.audio_message_id, message.image_id)}
+                onClick={() => onAudioMessageSelect(message.id, message.audio_message_id, message.image_id)}
                 sx={{
                   mb: 1,
                   borderRadius: 1,

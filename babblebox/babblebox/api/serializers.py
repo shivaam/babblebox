@@ -48,7 +48,7 @@ class ChatMessageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChatMessage
-        fields = ['id', 'chat_id', 'audio_message_id', 'timestamp', 'audio_file', 'image_id', 'owner', 'owner_username', 'transcription_en']
+        fields = ['id', 'chat_id', 'audio_message_id', 'timestamp', 'audio_file', 'image_id', 'owner', 'owner_username', 'transcription_en', 'ai_tips']
         read_only_fields = ('audio_message_id', 'timestamp', 'id', 'owner', 'transcription_en')
 
     def create(self, validated_data):
